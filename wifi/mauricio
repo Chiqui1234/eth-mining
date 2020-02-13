@@ -1,0 +1,7 @@
+#!/bin/bash
+ifconfig wlxc025673a8067 down
+ifconfig wlxc025673a8067 up
+wpa_passphrase TOWERPC "1558850503" > /etc/wpa_supplicant/towerpc.conf
+wpa_supplicant -B -i wlxc025673a8067 -c /etc/wpa_supplicant/towerpc.conf
+echo "Requesting a local IP from the router..."
+dhclient wlxc025673a8067

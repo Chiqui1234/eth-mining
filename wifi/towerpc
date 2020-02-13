@@ -1,0 +1,16 @@
+#!/bin/bash
+pkill dhclient
+pkill wpa_supplicant
+wpa_passphrase "TOWERPC" "1558850503" > /etc/wpa_supplicant/towerpc.conf
+ifconfig wlxc025673a8067 down
+ip addr flush dev wlxc025673a8067
+ifconfig wlxc025673a8067 up
+wpa_supplicant -B -i wlxc025673a8067 -c /etc/wpa_supplicant/towerpc.conf
+dhclient -r wlxc025673a8067
+echo "Requesting a local IP from the router..."
+dhclient wlxc025673a8067
+ip route show
+echo ""
+echo nameserver 8.8.8.8 >> /etc/resolv.conf
+echo nameserver 8.8.4.4 >> /etc/resolv.conf
+echo "WiFi setup finished"
