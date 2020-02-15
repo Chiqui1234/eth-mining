@@ -1,12 +1,26 @@
+# 952MHz --> 24.743MH/s, 25.419MH/s (72c, 68c)
+# 1041MHz --> 25.217MH/s, 25.849MH/s (74c. 67c)
 i=0
-while [  $i -lt 1 ]; do
+card0 () {
 	mclk=$( cat /sys/class/drm/card0/device/pp_mclk_od )
-	echo 20 > /sys/class/drm/card0/device/pp_mclk_od
-	echo "Memory: (+$mclk%)"
-	echo manual > /sys/class/drm/card0/device/power_dpm_force_performance_level
-	echo 3 > /sys/class/drm/card0/device/pp_dpm_sclk
+        echo 20 > /sys/class/drm/card0/device/pp_mclk_od
+        echo "Card0 Memory: (+$mclk%)"
+        echo manual > /sys/class/drm/card0/device/power_dpm_force_performance_level
+        echo 2 > /sys/class/drm/card0/device/pp_dpm_sclk
+        cat /sys/class/drm/card0/device/pp_dpm_sclk
+}
+card1 () {
+	mclk=$( cat /sys/class/drm/card1/device/pp_mclk_od )
+        echo 20 > /sys/class/drm/card1/device/pp_mclk_od
+        echo "Card1 Memory: (+$mclk%)"
+        echo manual > /sys/class/drm/card1/device/power_dpm_force_performance_level
+        echo 2 > /sys/class/drm/card1/device/pp_dpm_sclk
+        cat /sys/class/drm/card1/device/pp_dpm_sclk
+}
+while [  $i -lt 1 ]; do
+	card0
+	card1
 	sensors
-	cat /sys/class/drm/card0/device/pp_dpm_sclk
-	sleep 2
-	echo "Restarted"
+	sleep 5
+	echo "OC Restarted"
 done
