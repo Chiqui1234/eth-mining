@@ -1,10 +1,12 @@
-while [ 2 > 1 ]
-do
-   	echo 20 > /sys/class/drm/card0/device/pp_mclk_od
-	echo "Memory running at 2100MHz (+20%)"
+i=0
+while [  $i -lt 1 ]; do
+	mclk=$( cat /sys/class/drm/card0/device/pp_mclk_od )
+	echo 20 > /sys/class/drm/card0/device/pp_mclk_od
+	echo "Memory: (+$mclk%)"
 	echo manual > /sys/class/drm/card0/device/power_dpm_force_performance_level
 	echo 3 > /sys/class/drm/card0/device/pp_dpm_sclk
-	echo "Switched to low power consumption mode"
+	sensors
 	cat /sys/class/drm/card0/device/pp_dpm_sclk
+	sleep 2
 	echo "Restarted"
 done
