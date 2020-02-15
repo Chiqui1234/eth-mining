@@ -1,6 +1,11 @@
-echo 20 > /sys/class/drm/card0/device/pp_mclk_od
-echo "Memory running at 2100MHz (+20%)"
-echo manual > /sys/class/drm/card0/device/power_dpm_force_performance_level
-echo 3 > /sys/class/drm/card0/device/pp_dpm_sclk
-echo "Switched to low power consumption mode"
-cat /sys/class/drm/card0/device/pp_dpm_sclk
+while [ 2 > 1 ]
+do
+   	echo 20 > /sys/class/drm/card0/device/pp_mclk_od
+	echo "Memory running at 2100MHz (+20%)"
+	echo manual > /sys/class/drm/card0/device/power_dpm_force_performance_level
+	echo 3 > /sys/class/drm/card0/device/pp_dpm_sclk
+	echo "Switched to low power consumption mode"
+	cat /sys/class/drm/card0/device/pp_dpm_sclk
+	sleep 5
+	echo "Restarted"
+done
