@@ -6,6 +6,5 @@ do
 	echo 3 > /sys/class/drm/card0/device/pp_dpm_sclk
 	echo "Switched to low power consumption mode"
 	cat /sys/class/drm/card0/device/pp_dpm_sclk
-	sleep 5
 	echo "Restarted"
 done
