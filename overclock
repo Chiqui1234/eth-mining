@@ -3,21 +3,24 @@
 i=0
 card () {
 	local mclk=$( cat /sys/class/drm/card$1/device/pp_mclk_od )
+	#local temp=sensors | grep "edge" | cut -c16-17 # Shows "edge" sensor (Temperature in degrees)
         echo 20 > /sys/class/drm/card$1/device/pp_mclk_od
         echo "Card$1 Memory: (+$mclk%)"
         echo manual > /sys/class/drm/card$1/device/power_dpm_force_performance_level
-        echo 2 > /sys/class/drm/card$1/device/pp_dpm_sclk
+        echo $2 > /sys/class/drm/card$1/device/pp_dpm_sclk
         cat /sys/class/drm/card$1/device/pp_dpm_sclk
 }
 while [  $i -lt 1 ]; do
-	card 0
-	card 1
-	card 2
-	card 3
+	card 0 2
+	card 1 2
+	card 2 2
+	card 3 2
+	echo ""
 	sensors | grep "edge" | cut -c1-23 # Shows "edge" sensor (Temperature in degrees)
 	sensors | grep "power1" | cut -c1-23 # Shows "power1" sensor (Power consumption in Watts)
 	sensors | grep "vddgfx" | cut -c1-23 # Shows "voltage" regulator sensor (Measure in volts)
 	sensors | grep "fan1" | cut -c1-23 # Shows "fan1" hub speed sensor (Fan speed in RPM)
 	sleep 5
+	echo ""
 	echo "OC Restarted"
 done
