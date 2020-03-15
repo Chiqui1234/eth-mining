@@ -1,0 +1,16 @@
+#!/bin/bash
+pkill dhclient
+pkill wpa_supplicant
+wpa_passphrase "Fibertel WiFi893 2.4GHz" "0042060808" > /etc/wpa_supplicant/ramiro.conf
+ifconfig wlxc025673f140d down
+ip addr flush dev wlxc025673f140d
+ifconfig wlxc025673f140d up
+wpa_supplicant -B -i wlxc025673f140d -c /etc/wpa_supplicant/ramiro.conf
+dhclient -r wlxc025673f140d
+echo "Requesting a local IP from the router..."
+dhclient wlxc025673f140d
+ip route show
+echo ""
+echo nameserver 8.8.8.8 >> /etc/resolv.conf
+echo nameserver 8.8.4.4 >> /etc/resolv.conf
+echo "WiFi setup finished"
