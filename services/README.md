@@ -9,3 +9,9 @@ ExecStart=/home/ethereum/eth-mining/overclock.sh
 
 [Install]
 WantedBy=multi-user.target
+
+# Enable the service
+sudo systemctl enable myServiceNameHere
+
+# Start the service
+sudo systemctl start myServiceNameHere
